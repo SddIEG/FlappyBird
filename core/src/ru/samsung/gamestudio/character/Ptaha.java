@@ -1,4 +1,4 @@
-package ru.samsung.gamestudio;
+package ru.samsung.gamestudio.character;
 
 import static ru.samsung.gamestudio.MyGdxGame.SCR_HEIGHT;
 
@@ -8,10 +8,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 public class Ptaha {
     int x, y;
     int speed;
-    int frameTexture;
+    int frameCounter;
     Texture[] arrayTexture;
     boolean jamp;
-    final int maxjampH = 100;
+    final int maxjampH = 125;
+    int jampHeight;
+    int setY;
+
     int height, weight;
 
 
@@ -19,7 +22,7 @@ public class Ptaha {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        frameTexture = 0;
+        frameCounter = 0;
         this.height = jampH;
         this.weight = weight;
 
@@ -29,10 +32,14 @@ public class Ptaha {
                 new Texture("skinPtaha/bird1.png"),
         };
     }
+    public void onClick() {
+        jamp = true;
+        jampHeight = maxjampH + y;
 
+    }
 
     public void fly() {
-        if (y >= height) {
+        if (y >= jampHeight) {
             jamp = false;
         }
 
@@ -46,25 +53,26 @@ public class Ptaha {
 
     public void draw(Batch batch) {
         int frameM = 10;
-        batch.draw(arrayTexture[frameTexture / frameM], x, y, weight, weight * 3 / 4);
-        if (frameTexture++ == arrayTexture.length * frameM - 1) frameTexture = 0;
+        batch.draw(arrayTexture[frameCounter / frameM], x, y, weight, weight * 3 / 4);
+        if (frameCounter++ == arrayTexture.length * frameM - 1) frameCounter = 0;
     }
 
-    void dispons() {
+    public void dispons() {
         for (Texture texture : arrayTexture) {
             texture.dispose();
         }
     }
 
-    public void onClick() {
-        jamp = true;
-        height = maxjampH + y;
 
-    }
 
     public boolean isInField() {
         if (y + height < 0) return false;
         if (y > SCR_HEIGHT) return false;
         return true;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+
     }
 }

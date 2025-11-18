@@ -1,4 +1,4 @@
-package ru.samsung.gamestudio;
+package ru.samsung.gamestudio.character;
 
 import static ru.samsung.gamestudio.MyGdxGame.SCR_HEIGHT;
 import static ru.samsung.gamestudio.MyGdxGame.SCR_WIDTH;
@@ -12,6 +12,7 @@ public class Tryba {
     Random r;
     Texture textyraUpTryba;
     Texture textyraDownTryba;
+
     boolean isPointReceived;
     int gapY;
     int wight = 200, height = 700;
@@ -19,6 +20,7 @@ public class Tryba {
     int padding = 100;
     int speed = 10;
     int distanceTubes;
+    int diapazonUp, diapazondown;
     int x;
 
 
@@ -28,17 +30,18 @@ public class Tryba {
         gapY = gapHeight / 2 + padding + r.nextInt(SCR_HEIGHT - 2 * (padding + gapHeight / 2));
         distanceTubes = (SCR_WIDTH + wight) / (countTryba - 1);
         x = distanceTubes * idxTryba + SCR_WIDTH;
+
         textyraUpTryba = new Texture("trybi/tube_flipped.png");
         textyraDownTryba = new Texture("trybi/tube.png");
 
     }
 
-    void draw(Batch batch) {
+    public void draw(Batch batch) {
         batch.draw(textyraUpTryba, x, gapY + gapHeight / 2, wight, height);
         batch.draw(textyraDownTryba, x, gapY - gapHeight / 2 - height, wight, height);
     }
 
-    void move() {
+    public void move() {
         x -= speed;
         if (x < -wight) {
             isPointReceived = false;
@@ -47,7 +50,7 @@ public class Tryba {
         }
     }
 
-    void disponse() {
+    public void disponse() {
         textyraUpTryba.dispose();
         textyraDownTryba.dispose();
     }
@@ -56,7 +59,7 @@ public class Tryba {
 
         if (ptaha.y <= gapY - gapHeight / 2 && ptaha.x + ptaha.weight >= x && ptaha.x <= x)
             return true;
-        if (ptaha.height >= gapY + gapHeight / 2 && ptaha.weight >= x && ptaha.x <= x)
+        if (ptaha.height >= gapY + gapHeight / 2 && ptaha.x + ptaha.weight >= x && ptaha.x <= x)
             return true;
 
 
@@ -70,6 +73,7 @@ public class Tryba {
     public void setPointReceived() {
         isPointReceived = true;
     }
+
 
 }
 
