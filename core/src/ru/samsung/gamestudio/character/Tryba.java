@@ -13,14 +13,13 @@ public class Tryba {
     Texture textyraUpTryba;
     Texture textyraDownTryba;
 
-    boolean isPointReceived;
+    boolean isPointReceived = false;
     int gapY;
     int wight = 200, height = 700;
     int gapHeight = 400;
     int padding = 100;
     int speed = 10;
     int distanceTubes;
-    int diapazonUp, diapazondown;
     int x;
 
 
@@ -59,7 +58,7 @@ public class Tryba {
 
         if (ptaha.y <= gapY - gapHeight / 2 && ptaha.x + ptaha.weight >= x && ptaha.x <= x)
             return true;
-        if (ptaha.height >= gapY + gapHeight / 2 && ptaha.x + ptaha.weight >= x && ptaha.x <= x)
+        if (ptaha.y + ptaha.height >= gapY + gapHeight / 2 && ptaha.x + ptaha.weight >= x && ptaha.x <= x)
             return true;
 
 
@@ -67,7 +66,13 @@ public class Tryba {
     }
 
     public boolean isNeedPoints(Ptaha ptaha) {
-        return ptaha.x > x + wight && !isPointReceived;
+        System.out.print("ptahaX = " +ptaha.x);
+        System.out.print("X = " +x);
+        System.out.println("w = " +wight);
+        if (ptaha.x >= x + wight ){
+            return  !isPointReceived;
+        }
+        return false;
     }
 
     public void setPointReceived() {

@@ -10,20 +10,19 @@ public class Ptaha {
     int speed;
     int frameCounter;
     Texture[] arrayTexture;
-    boolean jamp;
-    final int maxjampH = 125;
+    boolean jamp = true;
+    final int maxjampH = 100;
     int jampHeight;
-    int setY;
 
     int height, weight;
 
 
-    public Ptaha(int x, int y, int speed, int jampH, int weight) {
+    public Ptaha(int x, int y, int speed, int height, int weight) {
         this.x = x;
         this.y = y;
-        this.speed = speed;
+        this.speed = 8;
         frameCounter = 0;
-        this.height = jampH;
+        this.height = height;
         this.weight = weight;
 
 
@@ -32,6 +31,7 @@ public class Ptaha {
                 new Texture("skinPtaha/bird1.png"),
         };
     }
+
     public void onClick() {
         jamp = true;
         jampHeight = maxjampH + y;
@@ -53,7 +53,7 @@ public class Ptaha {
 
     public void draw(Batch batch) {
         int frameM = 10;
-        batch.draw(arrayTexture[frameCounter / frameM], x, y, weight, weight * 3 / 4);
+        batch.draw(arrayTexture[frameCounter / frameM], x, y, weight, height);
         if (frameCounter++ == arrayTexture.length * frameM - 1) frameCounter = 0;
     }
 

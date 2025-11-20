@@ -19,7 +19,7 @@ public class PointCounter {
     }
 
     public void draw(Batch batch, int countOfPoints) {
-        font.draw(batch, "Count" + countOfPoints, x, y);
+        font.draw(batch, "Count " + countOfPoints, x, y);
     }
 
     public void despose() {

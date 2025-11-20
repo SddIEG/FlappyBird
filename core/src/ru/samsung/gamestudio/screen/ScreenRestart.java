@@ -6,23 +6,24 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import ru.samsung.gamestudio.MyGdxGame;
-import ru.samsung.gamestudio.components.GameFON;
 import ru.samsung.gamestudio.components.PointCounter;
 import ru.samsung.gamestudio.components.TextButton;
 
 public class ScreenRestart implements Screen {
     MyGdxGame mGG;
-    TextButton buttonRestart;
+    TextButton buttonRestart , buttonMenu;
     PointCounter pointCounter;
     GameFON gameFON;
 
     int gamePoint;
-
     public ScreenRestart(MyGdxGame mGG) {
+
         this.mGG = mGG;
         pointCounter = new PointCounter(750, 530);
         buttonRestart = new TextButton(100, 400, "Restart");
+        buttonMenu = new TextButton(100, 100, "Menu");
         gameFON = new GameFON("fon/restart_bg.png");
+
     }
 
     @Override
@@ -32,23 +33,24 @@ public class ScreenRestart implements Screen {
 
     @Override
     public void render(float delta) {
+        ScreenUtils.clear(1, 0, 0, 1);
         if (Gdx.input.justTouched()) {
-
             Vector3 touch = mGG.camera.unproject(
                     new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)
             );
-
             if (buttonRestart.isHit((int) touch.x, (int) touch.y)) {
-                mGG.setScreen(mGG.screenRestart);
+                mGG.setScreen(mGG.oTg);
+            } else if (buttonMenu.isHit((int) touch.x, (int) touch.y)){
+                mGG.setScreen(mGG.screenMenu);
             }
         }
-        ScreenUtils.clear(1, 0, 0, 1);
         mGG.camera.update();
         mGG.batch.setProjectionMatrix(mGG.camera.combined);
         mGG.batch.begin();
 
         gameFON.draw(mGG.batch);
         buttonRestart.draw(mGG.batch);
+        buttonMenu.draw(mGG.batch);
         pointCounter.draw(mGG.batch, gamePoint);
 
         mGG.batch.end();

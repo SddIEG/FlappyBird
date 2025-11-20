@@ -10,14 +10,15 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import ru.samsung.gamestudio.MyGdxGame;
 import ru.samsung.gamestudio.character.Ptaha;
 import ru.samsung.gamestudio.character.Tryba;
-import ru.samsung.gamestudio.components.GameFON;
 import ru.samsung.gamestudio.components.PointCounter;
+import ru.samsung.gamestudio.components.Text;
 import ru.samsung.gamestudio.components.TextButton;
 
 public class OtrisovkaGame implements Screen {
 
     MyGdxGame mGG;
     GameFON gameFon;
+
     Ptaha ptaha;
     boolean isGameOver;
     PointCounter pointCounter;
@@ -28,20 +29,20 @@ public class OtrisovkaGame implements Screen {
     Tryba[] trybi;
 
 
-    int gamePoints;
+    int gamePoints ;
     int countTryba = 3;
 
     public OtrisovkaGame(MyGdxGame mGG) {
         this.mGG = mGG;
+
         initTryba();
         gameFon = new GameFON("fon/Untitled.png");
-
-        ptaha = new Ptaha(0, 0, 10, 200, 200);
+        ptaha = new Ptaha(10, 0, 10, 200, 200);
         pointCounter = new PointCounter(SCR_WIDTH - pointCounterMarginRight, SCR_HEIGHT - pointCounterMarginTop);
 
     }
 
-  public void initTryba() {
+    public void initTryba() {
         trybi = new Tryba[countTryba];
         for (int i = 0; i < countTryba; i++) {
             trybi[i] = new Tryba(countTryba, i);
@@ -50,7 +51,7 @@ public class OtrisovkaGame implements Screen {
 
     @Override
     public void show() {
-        gamePoints = 0;
+        gamePoints = 9;
         isGameOver = false;
         ptaha.setY(SCR_HEIGHT / 2);
         initTryba();
@@ -59,29 +60,38 @@ public class OtrisovkaGame implements Screen {
     @Override
     public void render(float delta) {
         if (isGameOver) {
-        mGG.screenRestart.gamePoint = gamePoints;
-        mGG.setScreen(mGG.screenRestart);
-    }
+            mGG.screenRestart.gamePoint = gamePoints;
+            mGG.setScreen(mGG.screenRestart);
+        }
         if (Gdx.input.justTouched()) {
             ptaha.onClick();
         }
         gameFon.move();
         ptaha.fly();
-        if (!ptaha.isInField()) {
-            System.out.printf("Lox");
-            isGameOver = true;
-        }
-        for (Tryba tryba : trybi) {
-            tryba.move();
-            if (tryba.isHit(ptaha)) {
+
+            if (!ptaha.isInField()) {
+                System.out.println(" ne popal");
                 isGameOver = true;
-                System.out.println("hit");
-            } else if (tryba.isNeedPoints(ptaha)) {
-                gamePoints += 1;
-                tryba.setPointReceived();
-                System.out.println(gamePoints);
             }
-        }
+
+            for (Tryba tryba : trybi) {
+                tryba.move();
+                if (tryba.isHit(ptaha)) {
+                    isGameOver = true;
+                    System.out.println("hit");
+                } else if (tryba.isNeedPoints(ptaha)) {
+                    gamePoints += 1;
+                    tryba.setPointReceived();
+                    System.out.println(gamePoints);
+                }
+            }
+
+
+
+
+
+
+
         ScreenUtils.clear(1, 1, 0, 1);
         mGG.camera.update();
         mGG.batch.setProjectionMatrix(mGG.camera.combined);
@@ -91,6 +101,7 @@ public class OtrisovkaGame implements Screen {
         ptaha.draw(mGG.batch);
         for (Tryba tryba : trybi) tryba.draw(mGG.batch);
         pointCounter.draw(mGG.batch, gamePoints);
+
 
 
         mGG.batch.end();
@@ -124,5 +135,6 @@ public class OtrisovkaGame implements Screen {
         for (int i = 0; i < countTryba; i++) {
             trybi[i].disponse();
         }
+
     }
 }
