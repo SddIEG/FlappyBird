@@ -13,7 +13,7 @@ public class ScreenRestart implements Screen {
     MyGdxGame mGG;
     TextButton buttonRestart , buttonMenu;
     PointCounter pointCounter;
-    GameFON gameFON;
+    GameFON background;
 
     int gamePoint;
     public ScreenRestart(MyGdxGame mGG) {
@@ -22,7 +22,7 @@ public class ScreenRestart implements Screen {
         pointCounter = new PointCounter(750, 530);
         buttonRestart = new TextButton(100, 400, "Restart");
         buttonMenu = new TextButton(100, 100, "Menu");
-        gameFON = new GameFON("fon/restart_bg.png");
+        background = new GameFON("fon/restart_bg.png");
 
     }
 
@@ -48,7 +48,7 @@ public class ScreenRestart implements Screen {
         mGG.batch.setProjectionMatrix(mGG.camera.combined);
         mGG.batch.begin();
 
-        gameFON.draw(mGG.batch);
+        background.draw(mGG.batch);
         buttonRestart.draw(mGG.batch);
         buttonMenu.draw(mGG.batch);
         pointCounter.draw(mGG.batch, gamePoint);
@@ -80,7 +80,7 @@ public class ScreenRestart implements Screen {
 
     @Override
     public void dispose() {
-        gameFON.despose();
+        background.despose();
         buttonRestart.dispose();
     }
 

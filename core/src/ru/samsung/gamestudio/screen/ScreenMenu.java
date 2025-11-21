@@ -49,9 +49,9 @@ public class ScreenMenu implements Screen {
             if (buttonGame.isHit((int) touch.x, (int) touch.y)) {
                 mGG.setScreen(mGG.oTg);
             }else if (buttonExit.isHit((int) touch.x , (int ) touch.y)){
-                mGG.batch.end();
+                Gdx.app.exit();
             } else if (buttonOptions.isHit((int) touch.x , (int ) touch.y)) {
-                mGG.batch.end();
+                mGG.setScreen(mGG.screenOptions);
             }
         }
         mGG.camera.update();
@@ -59,11 +59,11 @@ public class ScreenMenu implements Screen {
         mGG.batch.begin();
 
         gameFON.draw(mGG.batch);
+        
         buttonGame.draw(mGG.batch);
         buttonExit.draw(mGG.batch);
         buttonOptions.draw(mGG.batch);
         text.draw(mGG.batch);
-
         mGG.batch.end();
 
     }
