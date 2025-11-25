@@ -41,8 +41,7 @@ public class Text {
         font.draw(batch, text, textX, textY);
     }
 
-    public void dispose() {
-        font.dispose();
+    public void dispose() {        font.dispose();
     }
 
 

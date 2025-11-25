@@ -51,7 +51,7 @@ public class OtrisovkaGame implements Screen {
 
     @Override
     public void show() {
-        gamePoints = 9;
+        gamePoints = 0;
         isGameOver = false;
         ptaha.setY(SCR_HEIGHT / 2);
         initTryba();
@@ -85,10 +85,6 @@ public class OtrisovkaGame implements Screen {
                     System.out.println(gamePoints);
                 }
             }
-
-
-
-
 
 
 

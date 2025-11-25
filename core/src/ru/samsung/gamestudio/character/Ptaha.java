@@ -29,6 +29,7 @@ public class Ptaha {
         arrayTexture = new Texture[]{
                 new Texture("skinPtaha/bird0.png"),
                 new Texture("skinPtaha/bird1.png"),
+                new Texture("skinPtaha/bird2.png")
         };
     }
 

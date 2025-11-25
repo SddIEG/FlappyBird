@@ -14,7 +14,7 @@ import ru.samsung.gamestudio.components.TextButton;
 
 public class ScreenMenu implements Screen {
     MyGdxGame mGG;
-    TextButton buttonGame, buttonExit, buttonOptions , Nazvanie;
+    TextButton buttonGame, buttonExit,  Nazvanie;
     GameFON gameFON;
     Text text;
 
@@ -28,7 +28,6 @@ public class ScreenMenu implements Screen {
         text = new Text(SCR_HEIGHT-100,SCR_WIDTH-100 , "FLEPPY PTICHKA");
         buttonGame = new TextButton(0,y,"Game");
         buttonExit = new TextButton(0, y -200, "Exit");
-        buttonOptions = new TextButton(SCR_HEIGHT + 50, y -200, "Options");
         Nazvanie = new TextButton(0,0,"FLEPPY PTICHKA");
         gameFON = new GameFON("fon/Untitled.png");
     }
@@ -50,9 +49,8 @@ public class ScreenMenu implements Screen {
                 mGG.setScreen(mGG.oTg);
             }else if (buttonExit.isHit((int) touch.x , (int ) touch.y)){
                 Gdx.app.exit();
-            } else if (buttonOptions.isHit((int) touch.x , (int ) touch.y)) {
-                mGG.setScreen(mGG.screenOptions);
             }
+
         }
         mGG.camera.update();
         mGG.batch.setProjectionMatrix(mGG.camera.combined);
@@ -62,7 +60,6 @@ public class ScreenMenu implements Screen {
         
         buttonGame.draw(mGG.batch);
         buttonExit.draw(mGG.batch);
-        buttonOptions.draw(mGG.batch);
         text.draw(mGG.batch);
         mGG.batch.end();
 
