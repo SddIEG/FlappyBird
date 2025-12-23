@@ -8,16 +8,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import ru.samsung.gamestudio.MyGdxGame;
+import ru.samsung.gamestudio.character.Boss;
 import ru.samsung.gamestudio.character.Ptaha;
 import ru.samsung.gamestudio.character.Tryba;
 import ru.samsung.gamestudio.components.PointCounter;
-import ru.samsung.gamestudio.components.Text;
-import ru.samsung.gamestudio.components.TextButton;
 
 public class OtrisovkaGame implements Screen {
 
     MyGdxGame mGG;
     GameFON gameFon;
+    Boss boss;
 
     Ptaha ptaha;
     boolean isGameOver;
@@ -29,7 +29,8 @@ public class OtrisovkaGame implements Screen {
     Tryba[] trybi;
 
 
-    int gamePoints ;
+
+    int gamePoints;
     int countTryba = 3;
 
     public OtrisovkaGame(MyGdxGame mGG) {
@@ -38,6 +39,7 @@ public class OtrisovkaGame implements Screen {
         initTryba();
         gameFon = new GameFON("fon/Untitled.png");
         ptaha = new Ptaha(10, 0, 10, 200, 200);
+        boss = new Boss(SCR_WIDTH - 200, 275, 200, 200);
         pointCounter = new PointCounter(SCR_WIDTH - pointCounterMarginRight, SCR_HEIGHT - pointCounterMarginTop);
 
     }
@@ -48,6 +50,8 @@ public class OtrisovkaGame implements Screen {
             trybi[i] = new Tryba(countTryba, i);
         }
     }
+
+
 
     @Override
     public void show() {
@@ -66,14 +70,18 @@ public class OtrisovkaGame implements Screen {
         if (Gdx.input.justTouched()) {
             ptaha.onClick();
         }
+
         gameFon.move();
+
         ptaha.fly();
 
-            if (!ptaha.isInField()) {
-                System.out.println(" ne popal");
-                isGameOver = true;
-            }
+        if (!ptaha.isInField()) {
+            System.out.println(" ne popal");
+            isGameOver = true;
+        }
 
+
+        if (gamePoints < 2) {
             for (Tryba tryba : trybi) {
                 tryba.move();
                 if (tryba.isHit(ptaha)) {
@@ -85,7 +93,21 @@ public class OtrisovkaGame implements Screen {
                     System.out.println(gamePoints);
                 }
             }
+        } else {
+            for (Tryba tryba : trybi) {
+                tryba.last();
+                if (tryba.isHit(ptaha)) {
+                    isGameOver = true;
+                    System.out.println("hit");
+                } else if (tryba.isNeedPoints(ptaha)) {
+                    gamePoints += 1;
+                    tryba.setPointReceived();
+                    System.out.println(gamePoints);
+                }
+            }
 
+
+        }
 
 
         ScreenUtils.clear(1, 1, 0, 1);
@@ -95,9 +117,13 @@ public class OtrisovkaGame implements Screen {
 
         gameFon.draw(mGG.batch);
         ptaha.draw(mGG.batch);
+        if (gamePoints >= 4) {
+            boss.draw(mGG.batch);
+            boss.drawbullet(mGG.batch);
+            boss.shootBullet();
+        }
         for (Tryba tryba : trybi) tryba.draw(mGG.batch);
         pointCounter.draw(mGG.batch, gamePoints);
-
 
 
         mGG.batch.end();

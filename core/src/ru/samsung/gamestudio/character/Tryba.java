@@ -49,6 +49,11 @@ public class Tryba {
         }
     }
 
+    public void last(){
+        x -= speed;
+
+    }
+
     public void disponse() {
         textyraUpTryba.dispose();
         textyraDownTryba.dispose();

@@ -14,7 +14,7 @@ import ru.samsung.gamestudio.components.TextButton;
 
 public class ScreenMenu implements Screen {
     MyGdxGame mGG;
-    TextButton buttonGame, buttonExit,  Nazvanie;
+    TextButton buttonGame, buttonExit;
     GameFON gameFON;
     Text text;
 
@@ -25,10 +25,9 @@ public class ScreenMenu implements Screen {
 
     public  ScreenMenu(MyGdxGame mGG){
         this.mGG = mGG;
-        text = new Text(SCR_HEIGHT-100,SCR_WIDTH-100 , "FLEPPY PTICHKA");
+        text = new Text(SCR_HEIGHT-100,SCR_WIDTH-100 );
         buttonGame = new TextButton(0,y,"Game");
         buttonExit = new TextButton(0, y -200, "Exit");
-        Nazvanie = new TextButton(0,0,"FLEPPY PTICHKA");
         gameFON = new GameFON("fon/Untitled.png");
     }
 
